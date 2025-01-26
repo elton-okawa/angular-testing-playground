@@ -1,3 +1,3 @@
 # Angular Testing Playground
 
-View [[Wiki Home]]
+View [Wiki](https://github.com/elton-okawa/angular-testing-playground/wiki)
