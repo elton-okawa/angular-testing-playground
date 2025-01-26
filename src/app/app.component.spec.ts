@@ -38,14 +38,18 @@ describe('AppComponent', () => {
       const triggerHarness = await loader.getHarness(MenuTriggerHarness);
       await triggerHarness.toggle();
 
-      const menuHarness = await rootLoader.getHarness(MenuHarness);
+      let menuHarness = await rootLoader.getHarnessOrNull(MenuHarness);
 
-      expect(await menuHarness.isOpen()).toBe(true);
+      expect(menuHarness).not.toBeNull();
+      menuHarness = menuHarness!;
 
       const refresh = await menuHarness.getItem({ text: 'Refresh' });
       await refresh.click();
 
       expect(consoleSpy).toHaveBeenCalledWith('refresh');
+
+      menuHarness = await rootLoader.getHarnessOrNull(MenuHarness);
+      expect(menuHarness).toBeNull();
     });
   });
 });
