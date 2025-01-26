@@ -1,29 +1,51 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+
+import { HarnessLoader } from '@angular/cdk/testing';
+import { MenuTriggerHarness } from './menu/menu-trigger-harness.component';
+import { MenuHarness } from './menu/menu-harness.component';
 
 describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  let fixture: ComponentFixture<AppComponent>;
+  let loader: HarnessLoader;
+  let rootLoader: HarnessLoader;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       imports: [AppComponent],
-    }).compileComponents();
+    });
+
+    fixture = TestBed.createComponent(AppComponent);
+    loader = TestbedHarnessEnvironment.loader(fixture);
+
+    rootLoader = TestbedHarnessEnvironment.documentRootLoader(fixture);
   });
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'angular-testing-playground' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('angular-testing-playground');
-  });
+  describe('Menu', () => {
+    let consoleSpy: jest.SpyInstance;
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, angular-testing-playground');
+    beforeEach(() => {
+      consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+    });
+
+    it('should open and click menu', async () => {
+      const triggerHarness = await loader.getHarness(MenuTriggerHarness);
+      await triggerHarness.toggle();
+
+      const menuHarness = await rootLoader.getHarness(MenuHarness);
+
+      expect(await menuHarness.isOpen()).toBe(true);
+
+      const refresh = await menuHarness.getItem({ text: 'Refresh' });
+      await refresh.click();
+
+      expect(consoleSpy).toHaveBeenCalledWith('refresh');
+    });
   });
 });

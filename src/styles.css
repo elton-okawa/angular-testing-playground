@@ -1,1 +1,39 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  html {
+    background-color: theme(backgroundColor.gray.100);
+  }
+
+  .button {
+    background-color: theme(colors.blue.500);
+    color: theme(textColor.white);
+    font-weight: theme(fontWeight.semibold);
+    border-radius: theme(borderRadius.DEFAULT);
+    padding: theme(padding.1) theme(padding.2);
+  }
+
+  .button:hover {
+    background-color: theme(colors.blue.600);
+  }
+
+  .menu {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    gap: theme(gap.2);
+    padding: theme(padding.2);
+    margin-top: theme(margin.1);
+    border-radius: theme(borderRadius.DEFAULT);
+    box-shadow: theme(boxShadow.DEFAULT);
+  }
+
+  .menu-item {
+    text-align: left;
+  }
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
