@@ -1,9 +1,4 @@
-import { ComponentHarness, HarnessLoader } from '@angular/cdk/testing';
-import {
-  MenuItemHarness,
-  MenuItemHarnessFilters,
-} from './menu-item-harness.component';
-import { MenuHarness } from './menu-harness.component';
+import { ComponentHarness } from '@angular/cdk/testing';
 
 export class MenuTriggerHarness extends ComponentHarness {
   static hostSelector = '.cdk-menu-trigger';

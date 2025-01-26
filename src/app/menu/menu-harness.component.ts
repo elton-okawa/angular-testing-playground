@@ -1,4 +1,4 @@
-import { ComponentHarness, HarnessLoader } from '@angular/cdk/testing';
+import { ComponentHarness } from '@angular/cdk/testing';
 import {
   MenuItemHarness,
   MenuItemHarnessFilters,
